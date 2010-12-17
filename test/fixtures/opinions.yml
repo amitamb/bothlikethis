@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  session_user_id: 1
+  attribute_id: 1
+  like: false
+  type: 1
+
+two:
+  session_user_id: 1
+  attribute_id: 1
+  like: false
+  type: 1

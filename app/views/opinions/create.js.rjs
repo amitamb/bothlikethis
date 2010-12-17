@@ -1,0 +1,56 @@
+#page << "alert('Working')"
+
+@cell_info = get_topic_attribute_cell_info(@opinion)
+
+#page.call("delete_it", get_topic_attribute_cell_info(@opinion))
+
+if @new_topic_attribute
+  
+  # there is new attribute addition 
+  # it is almost same code as index.html.erb
+  page.insert_html(:after, 'opinions_table_header',
+  '<tr id="topic_attribute_row_'+ @opinion[:topic_attribute_id].to_s() +'">
+    <td class="topic_attribute_like" id="topic_attribute_like_cell_'+ @opinion[:topic_attribute_id].to_s() +'">
+       
+      ' + @cell_info[:like_text] + '
+
+    </td>
+        
+    <td class="topic_attribute" id="topic_attribute_text_cell_' + @opinion[:topic_attribute_id].to_s() + '">
+    
+      ' + @cell_info[:text] + '
+    
+    </td>
+        
+    <td class="topic_attribute_unlike" id="topic_attribute_unlike_cell_' + @opinion[:topic_attribute_id].to_s() + '">
+    
+      ' + @cell_info[:unlike_text] + '
+    
+    </td>
+    </tr>
+  
+  ')
+  
+  #page["opinions_table"].appendChild(page["topic_attribute_row_" + @opinion[:topic_attribute_id].to_s()]);
+  
+else
+  page["topic_attribute_like_cell_" + @opinion[:topic_attribute_id].to_s() ].innerHTML = @cell_info[:like_text]
+  #page["topic_attribute_text_cell_" + @opinion[:topic_attribute_id].to_s() ].innerHTML = @cell_info[:text]
+  page["topic_attribute_unlike_cell_" + @opinion[:topic_attribute_id].to_s() ].innerHTML = @cell_info[:unlike_text]
+end
+
+  #page["other_topic_attribute_" + @opinion[:topic_attribute_id].to_s()].setStyle("display:none;") #visual_effect :fade
+  
+#else
+
+if (@opinion[:action_type] == 1)
+  if @opinion["like_int"] == 1
+    page["likeTextBox_top"].value = ""
+    page["likeTextBox_top"].onchange()
+  else
+    page["unlikeTextBox_top"].value = ""
+    page["unlikeTextBox_top"].onchange()
+  end
+end
+
+#page.call("showOpinion", @opinion, @topic_attribute)  

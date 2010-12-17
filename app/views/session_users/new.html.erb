@@ -1,0 +1,15 @@
+<h1>New session_user</h1>
+
+<% form_for(@session_user) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :given_username %><br />
+    <%= f.text_field :given_username %>
+  </p>
+  <p>
+    <%= f.submit "Create" %>
+  </p>
+<% end %>
+
+<%= link_to 'Back', session_users_path %>

@@ -1,0 +1,130 @@
+<style>
+.match_score {color:#8d8d8d;}
+
+#session_user_action_bar {width:auto; background-color:#f9f9f9; padding:2px; margin-top:3px;display:none;}
+.session_user_action { color: #1f1fff; text-decoration:none;}
+
+#send_message_container {margin:5px;}
+
+#session_user_messages {}
+
+.messageHeader {width:100%; background-color:#f1f1f1;padding:4px;font-size:85%;}
+.messageHeader .header_sender {}
+.messageHeader .header_sender a{text-decoration:none;color:#444444;}
+
+.messageHeader .header_right_part {float:right;}
+.messageHeader .header_actions {}
+.messageHeader .header_actions a{text-decoration:none;color:#444444;}
+.messageHeader .header_date_time {}
+
+.messageBody {padding:4px;background-color:#fcfdfd;font-size:110%;margin-bottom:15px;}
+
+#session_user_message_message {rows:10;}
+
+</style>
+
+<h2 style="display:inline"> <%=h @session_user.given_username %> </h2> <span class="match_score"> Match Score 2.34</span>
+<br />
+
+<div id="session_user_action_bar">
+<a class="session_user_action" href="#">Send Message</a> 
+<!-- 
+|
+<a class="session_user_action" href="#">Poke</a>
+-->
+
+</div>
+
+		 <!-- Begin Left Column -->
+		 <div id="leftcolumn">
+		       
+		       <div id="send_message_container">
+						<% form_for(@session_user_message) do |f| %>
+							<%= f.error_messages %>
+
+								<%= f.hidden_field :receiver_id %>
+
+							<p>
+								<!-- <%= f.label :message %><br /> -->
+								<%= f.text_area :message, :rows => 5, :cols =>50 %>
+							</p>
+							<p>
+								<%= f.submit 'Send' %>
+							</p>
+						<% end %>
+						</div>
+
+						<div id="session_user_messages">
+
+						<% @session_user.received_messages.reverse.each do |message| %>
+							
+							<div class="messageHeader">
+								<span class="header_sender">From: <%= link_to message.sender.given_username, message.sender %></span>
+								<span class="header_right_part">
+									<% if message.receiver == @current_session_user || message.sender == @current_session_user %>
+										<span class="header_actions"><%= link_to 'delete message', message, :confirm => 'Are you sure?', :method => :delete %> |&nbsp; </span>
+									<% end %>
+									<span class="header_date_time"><%= time_ago_in_words(message.created_at) %> ago</span>
+								</span>
+							</div>
+							<div class="messageBody">
+								<%=auto_link simple_format h message.message %>
+							</div>
+						<% end %>
+
+						</div>
+
+		 </div>
+		 <!-- End Left Column -->
+		 
+		 <!-- Begin Right Column -->
+		 <div id="rightcolumn">
+		       
+				<div id="likes_container">
+				<h3>Likes</h3>
+				
+				<ul style="list-style:none;">
+				
+				<% for opinion in @session_user.opinions %>
+				
+					<% if opinion.like_int == 1 %>
+						<li style="color:Green;"><%=h opinion.topic_attribute.text %></li>
+					<% end %>
+				
+				<% end %>
+				
+				
+				</ul>
+				
+				</div>
+				
+				<div id="hates_container">
+				<h3>Hates</h3>
+				
+				<ul style="list-style:none;">
+				
+				<% for opinion in @session_user.opinions %>
+				
+					<% if opinion.like_int == -1 %>
+						<li style="color:Red;"><%=h opinion.topic_attribute.text %></li>
+					<% end %>
+				
+				<% end %>
+				
+				
+				</ul>
+				
+				</div>
+		 
+		 </div>
+		 <!-- End Right Column -->
+
+
+
+
+<br />
+<br />
+<!--
+<%= link_to 'Edit', edit_session_user_path(@session_user) %> |
+<%= link_to 'Back', session_users_path %>
+-->

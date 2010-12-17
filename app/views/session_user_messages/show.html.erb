@@ -1,0 +1,18 @@
+<p>
+  <b>Sender:</b>
+  <%=h @session_user_message.sender_id %>
+</p>
+
+<p>
+  <b>Receiver:</b>
+  <%=h @session_user_message.receiver_id %>
+</p>
+
+<p>
+  <b>Message:</b>
+  <%=h @session_user_message.message %>
+</p>
+
+
+<%= link_to 'Edit', edit_session_user_message_path(@session_user_message) %> |
+<%= link_to 'Back', session_user_messages_path %>

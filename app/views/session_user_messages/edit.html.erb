@@ -1,0 +1,24 @@
+<h1>Editing session_user_message</h1>
+
+<% form_for(@session_user_message) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :sender_id %><br />
+    <%= f.text_field :sender_id %>
+  </p>
+  <p>
+    <%= f.label :receiver_id %><br />
+    <%= f.text_field :receiver_id %>
+  </p>
+  <p>
+    <%= f.label :message %><br />
+    <%= f.text_area :message %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @session_user_message %> |
+<%= link_to 'Back', session_user_messages_path %>

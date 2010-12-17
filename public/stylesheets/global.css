@@ -1,0 +1,173 @@
+
+/*
+ * Start of copied part
+ * Thanks Keith Donegan
+ * */
+
+/*
+      Created by Keith Donegan of Code-Sucks.com
+	  
+	  E-Mail: Keithdonegan@gmail.com
+	  
+	  You can do whatever you want with these layouts,
+	  but it would be greatly appreciated if you gave a link
+	  back to http://www.code-sucks.com
+	  
+*/
+
+* { padding: 0; margin: 0; }
+
+body {
+ font-family: Arial, Helvetica, sans-serif;
+ font-size: 13px;
+}
+#wrapper { 
+ margin: 0 auto;
+ width: 922px;
+}
+#header {
+ width: 900px;
+ color: #333;
+ padding: 10px;
+ /*
+ border: 1px solid #ccc;
+ */
+ height: 50px;
+ margin: 10px 0px 0px 0px;
+ /* background: #DAC8BF;*/
+ 
+ position:relative;
+ 
+}
+#navigation {
+ width: 900px;
+ color: #333;
+ padding: 10px;
+ /*
+ border: 1px solid #ccc;
+ */
+ margin: 0px 0px 0px 0px;
+ 
+ /* background: #BD9C8C; */
+}
+#content { 
+ width: 900px;
+ color: #333;
+ 
+ /*
+ border: 1px solid #ccc;
+ background: #F2F2E6; 
+ */
+ margin: 0px 0px 0px 0px;
+ padding: 10px;
+ min-height: 350px;
+ text-align:left;
+ 
+}
+#footer { 
+ width: 900px;
+ color: #333;
+ /*
+ border: 1px solid #ccc;
+ background: #BD9C8C; 
+ */
+ margin: 0px 0px 10px 0px;
+ padding: 10px;
+ text-align:center;
+}
+
+/*
+ * Ends copied part
+ * */
+ 
+ 
+ /*
+  * Copid some more for right hand left hand panel layout
+  * used in session user show
+  * */
+  
+  #leftcolumn { 
+ color: #333;
+ margin: 0px 5px 5px 0px;
+ padding: 10px;
+ height: 350px;
+ width: 650px;
+ float: left;
+}
+#rightcolumn { 
+ float: right;
+ color: #333;
+ border: 1px dotted #ccc;
+ background: ;
+ margin: 0px 0px 5px 0px;
+ padding: 10px;
+ height: 350px;
+ width: 195px;
+ display: inline;
+}
+  
+/*
+ * Copied part ends hre
+ * */
+ 
+ 
+
+#header #titleSpan {position:absolute; left:0px;padding:5px;}
+#header #titleSpan #subHeading {Font-size:120%;}
+#header #titleSpan a {text-decoration:none;}
+
+#user_div
+{
+  position:absolute;
+  top:0px;
+  right:0px;
+  padding:0px 10px 0px 0px;
+  text-align:right;
+}
+
+#navigation a {padding:3px;margin:2px;text-decoration:none;}
+
+#addSearchEngineLink {padding:10px;margin:50px;display:block;}
+#addSearchEngineLink a {text-decoration:none;font-size:170%;}
+
+
+#searchForm {margin:50px;}
+#searchForm *{margin:auto;padding:4px;}
+
+#facebookLikeDiv {}
+
+#copyrightText {}
+
+span.q{display:block;font-weight:bold;}
+
+span.a{display:block;}
+
+li.atom{margin:2px;background-color:#ffffef;}
+
+.atom_value {color:Black;}
+.atom_value_editor {display:none;}
+.atom_value_editor > * {display:inline;}
+
+.atom_operations{font-size:80%;}
+.atom_operations a, .atom_operations a:hover, .atom_operations a:visited{text-decoration:none;color:#88888;}
+
+.atom_context_links{font-size:80%;}
+
+.atom_timestamp{font-size:80%;}
+
+#list_key {font-size:200%;}
+
+/* /key_value_pair */
+.allKeys {width:100%;}
+.allKeys td {padding:0px 0px 10px 0px;text-align:center;}
+.allKeys td a {padding:0px 10px 0px 10px;text-decoration:none;}
+
+#user_div .account_info_session_user {color:#9d9d9d;}
+
+#user_div .account_info_session_user a {color:#9d9dff; text-decoration:none;}
+
+#user_div .account_info_user {color:#9d9d9d;}
+
+#user_div .account_info_user a {color:#9d9dff; text-decoration:none;}
+
+

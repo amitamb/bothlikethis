@@ -1,0 +1,298 @@
+<style>
+* {font-family:Courier;}
+body {}
+a img{border:0px;}
+
+form.new_opinion {display:inline;}
+
+.centeredContainer {margin-left:auto;margin-right:auto;text-align:center;}
+.leftedContainer {margin-left:auto;margin-right:auto;text-align:left;}
+
+#topicTitle {font-size:220%;}
+
+#topicImageContainer {padding:10px;padding-bottom:25px;}
+#topicImageContainer img{border:0px;max-width:80%;max-height:60%;}
+
+#similar_session_users {width:100%;font:inherit;}
+#similar_session_users table{width:100%;border:0;}
+.similar_session_user_cell {border:0;text-align:center;vertical-align:middle;padding:7px;font-size:100%;}
+.similar_session_user_cell a, .similar_session_user_cell a:visited{border:0;text-decoration:none;}
+
+.similar_session_user_cell a:hover {}
+
+#opinions {width:100%;}
+#opinions > table {width:100%;border-spacing:0px;border-bottom:1px dotted;}
+#opinions > table tr {width:100%;}
+#opinions > table td {padding:4px;margin:0px;height:24px;}
+#opinions > table th {padding:4px;margin:0px;height:24px;}
+
+.topic_attribute_like {font-size:115%;color:#446644;border-left:1px dotted;border-right:1px dotted;width:25%;border-top:1px dotted;}
+.topic_attribute {font-weight:bold;font-size:115%;color:#444444;border-top:1px dotted;}
+.topic_attribute_unlike {font-size:115%;color:#664444;border-right:1px dotted;border-left:1px dotted;width:25%;border-top:1px dotted;}
+
+th.topic_attribute_like {font-size:110%;border-right:1px dotted;font-weight:bold;}
+th.topic_attribute {font-size:110%;visibility:hidden;}
+th.topic_attribute_unlike {font-size:115%;border-left:1px dotted;}
+
+.new_opinion {display:inline;}
+
+.oneLikeItem {margin:15px;}
+
+.oneLikeItem .liker {font-style:Italic;}
+.oneLikeItem .likeText {}
+.oneLikeItem .dislikeText {}
+
+.oneLikeItem .attribLiked {font-weight:bold;color:Green;}
+.oneLikeItem .attribDisliked {font-weight:bold;color:Red;}
+
+.oneLikeItem .currentItemText {}
+
+.meTooLink {color:#111111;}
+.notAtAllLink {color:#ff2222;}
+
+</style>
+
+<div class="centeredContainer">
+
+<div id="topicTitle">
+<%=h @current_topic.name %>
+</div>
+
+<!-- <img id="topicImage" src="http://213.251.145.96/img/wlogo.png" /> -->
+
+<div id="topicImageContainer" style="padding:20px;">
+<img id="topicImage" src="<%=h @current_topic.image_url %>" />
+<br />
+<span style="font-size:80%;color:#ccaacc;"><%= @current_topic[:image_attribution_text] %></span>
+</div>
+
+<div style="font-size:110%;">
+<% form_remote_for(@like_opinion) do |f| %>
+  <%= f.error_messages %>
+  
+  The thing that I <b>love</b> about <b><%=h @current_topic.name %></b> is <input id="likeTextBox_top" name="opinion_text" autocomplete="off" type="text" style="padding:0px;margin:0px;font-size:100%;border:1px dotted;background-color:#eeffee;" value="" size="10" onkeyup="changeSize(this)" onchange="changeSize(this)" />.
+  
+  <%= f.hidden_field :like %>
+  <%= f.hidden_field :action_type, :Value => 1 %>
+  
+<% end %>
+
+<br />
+<br />
+
+<% form_remote_for(@dislike_opinion) do |f| %>
+  <%= f.error_messages %>
+  
+  The thing that I <b>hate</b> about <b><%=h @current_topic.name %></b> is <input id="unlikeTextBox_top" name="opinion_text" autocomplete="off" type="text" style="padding:0px;margin:0px;font-size:100%;border:1px dotted;background-color:#ffeeee;" value="" size="10" onkeyup="changeSize(this)" onchange="changeSize(this)" />.
+  
+  <%= f.hidden_field :like %>
+  <%= f.hidden_field :action_type, :Value => 1 %>
+  
+<% end %>
+
+</div>
+</div>
+<br />
+<div id="similar_session_users" style="font-size:110%;font-family:courier;" class="centeredContainer">
+
+  <h3 style="padding:10px;">Like minded users</h3>
+  
+  <hr />
+
+  
+  <table>
+  
+    <% if @similar_session_users.size > 0 %>
+      <% @similar_session_users.in_groups_of(3, false) do |session_users_group| %>
+        <tr>
+        <% for session_user in session_users_group %>
+          <td class="similar_session_user_cell"><%= link_to session_user.given_username, session_user %><!-- - <%= session_user.match_score %> --></td>
+        <% end %>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+          <td class="similar_session_user_cell">None found</td>
+      </tr>
+    <% end %>
+  </table>
+</div>
+<hr />
+<div class="centeredContainer" style="font-size:110%;font-family:courier;" id="likeDashboard" >
+
+
+
+<% form_remote_for(@opinion_form, :html => {:id => 'opinion_form' }) do |f| %>
+
+  <input id="likeTextBox" name="opinion_text" autocomplete="off" type="hidden" value="" size="10" onkeydown="changeSize(this)" onchange="changeSize(this)" />
+
+  <%= f.hidden_field :like %>
+  <%= f.hidden_field :action_type, :Value => 2 %>
+  
+  <!-- <%= f.submit "Me Too" %> -->
+  
+<% end %>
+
+<script>
+function create_opinion(text, like, action_type)
+{
+  if (text == null)
+  {
+    alert("CreateOpinion: Error in text");
+    return;
+  }
+  
+  if (like == null)
+  {
+    alert("CreateOpinion: Error in like");
+    return;
+  }
+    
+  if (action_type == null)
+  {
+    action_type = 2;
+  }
+  
+  var opinion_form = $("opinion_form");
+  opinion_form.opinion_text.value = text;
+  opinion_form["opinion[like]"].value = like;
+  opinion_form["opinion[action_type]"].value = action_type;
+  
+  opinion_form.onsubmit();
+}
+
+</script>
+
+<style>
+
+* {padding:0px;margin:0px;}
+
+a.lubutton {text-decoration:none;}
+
+backup {
+  
+  color:#3B5998;background-color:#ECEEF5;
+  
+  border:2px solid #CAD4E7;
+  
+  }
+
+a.like_button {
+  
+  color:#0B6138;background-color:#E0F8EC;
+  border:1px solid #A9F5D0;
+  padding:2px;
+  border-bottom-left-radius: 3px 3px;
+  border-bottom-right-radius: 3px 3px;
+  border-top-left-radius: 3px 3px;
+  border-top-right-radius: 3px 3px;
+  }
+  
+a.like_button span {font-size:12px;background:url('/images/thumb_up.png') no-repeat;padding-left:18px;}
+  
+a.unlike_button {color:Red;}
+
+a.unlike_button {
+  
+  color:#610B0B;background-color:#F8E0E0;
+  border:1px solid #F5A9A9;
+  padding:2px;
+  border-bottom-left-radius: 3px 3px;
+  border-bottom-right-radius: 3px 3px;
+  border-top-left-radius: 3px 3px;
+  border-top-right-radius: 3px 3px;
+  }
+  
+a.unlike_button span {font-size:12px;background:url('/images/thumb_down.png') no-repeat;padding-left:18px;}
+
+</style>
+
+<br />
+
+<div id="opinions">
+<table id="opinions_table">
+  <tr id="opinions_table_header">
+      <th class="topic_attribute_like">Likes</th>
+      <th class="topic_attribute">About</th>
+      <th class="topic_attribute_unlike">Hates</th>
+  </tr>
+<% for opinion in @opinions %>
+
+    <% opinion[:like_count] = opinion[:like_count].to_i() - (if opinion[:current_session_user_like_int] == "1" then 1 else 0 end) %>
+    <% opinion[:unlike_count] = opinion[:unlike_count].to_i() - (if opinion[:current_session_user_like_int] == "-1" then 1 else 0 end) %>
+    
+    <% cell_info = get_topic_attribute_cell_info(opinion) %>
+
+    <tr id="topic_attribute_row_<%= opinion[:topic_attribute_id] %>">
+    <td class="topic_attribute_like" id="topic_attribute_like_cell_<%= opinion[:topic_attribute_id] %>">
+       
+      <%= cell_info[:like_text] %>
+      
+      <% if cell_info[:show_like_button] %>   
+      
+        <%= link_to_function(content_tag(:span, "Like"), "create_opinion('"+ escape_javascript(opinion[:text]) + "', true)", :style => "float:right;", :class => "lubutton like_button") %>
+
+      <% end %>    
+      
+    </td>
+        
+    <td class="topic_attribute" id="topic_attribute_text_cell_<%= opinion[:topic_attribute_id] %>">
+    
+      <div style="position:relative;width:100%;height:100%;">
+        <%=h cell_info[:text] %>
+        
+        <% if is_user_admin%>
+          <%= link_to 'Destroy', TopicAttribute.find(opinion[:topic_attribute_id]), :confirm => 'Are you sure?', :method => :delete, :style => "position:absolute;bottom:0px;right:10px;font-size:10px;color:#d1d1d1;text-decoration:none;" %>
+        <% end %>
+      </div>
+    
+    </td>
+        
+    <td class="topic_attribute_unlike" id="topic_attribute_unlike_cell_<%= opinion[:topic_attribute_id] %>">
+    
+      <%= cell_info[:unlike_text] %>
+      
+      <% if cell_info[:show_unlike_button] %>
+      
+        <%= link_to_function(content_tag(:span, "Hate"), "create_opinion('"+ escape_javascript(opinion[:text]) + "', false)", :style => "float:left;", :class => "lubutton unlike_button") %>
+      
+      <% end %>
+    
+    </td>
+    </tr>
+
+<% end %>
+</table>
+</div>
+
+<!--
+<% if @next_topic %>
+Time to show next topic <%= distance_of_time_in_words(Time.now.utc, @next_topic.time_to_show.utc) %>
+<hr />
+<% end %>
+-->
+
+</div>
+
+<script>
+
+function changeSize(srcElem)
+{
+  if (srcElem.value.length > 0)
+  {
+    if (srcElem.value.length > 10)
+      srcElem.size = srcElem.value.length;
+    else
+      srcElem.size = 10;
+  }
+  else
+  {
+    srcElem.size = 10;
+  }
+}
+
+var likeTextBox = document.getElementById("likeTextBox_top");
+
+likeTextBox.focus();
+
+</script>

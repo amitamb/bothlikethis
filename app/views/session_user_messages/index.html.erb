@@ -1,0 +1,24 @@
+<h1>Listing session_user_messages</h1>
+
+<table>
+  <tr>
+    <th>Sender</th>
+    <th>Receiver</th>
+    <th>Message</th>
+  </tr>
+
+<% @session_user_messages.each do |session_user_message| %>
+  <tr>
+    <td><%=h session_user_message.sender_id %></td>
+    <td><%=h session_user_message.receiver_id %></td>
+    <td><%=h session_user_message.message %></td>
+    <td><%= link_to 'Show', session_user_message %></td>
+    <td><%= link_to 'Edit', edit_session_user_message_path(session_user_message) %></td>
+    <td><%= link_to 'Destroy', session_user_message, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New session_user_message', new_session_user_message_path %>
