@@ -13,6 +13,9 @@ class ApplicationController < ActionController::Base
   # from your application log (in this case, all fields with names like "password"). 
   # filter_parameter_logging :password
   
+  include AuthenticatedSystem
+
+  
   helper_method :is_user_admin, :getCurrentTopic, :getNextTopic, :getCurrentUser, :getCurrentSessionUser
   
   protected

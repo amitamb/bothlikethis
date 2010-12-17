@@ -15,18 +15,40 @@
 	  
 */
 
+/*
+ * There is some editing happened
+ * like added html selector
+ * modified body selector
+ * */
+
+/*
 * { padding: 0; margin: 0; }
+*/
+
+html {
+  background-color:#fdfdfd;
+  height:100%;
+}
 
 body {
- font-family: Arial, Helvetica, sans-serif;
+ font-family: Droid Sans, Arvo, Droid Serif, Courier, Arial, Helvetica, sans-serif;
  font-size: 13px;
+ padding:0px;
+ margin:0px;
+ height:100%;
 }
 #wrapper { 
  margin: 0 auto;
- width: 922px;
+ padding:10px;
+ width: 1000px; /*922*/
+ background-color:White;
+ border-left:1px dotted #644;
+ border-right:1px dotted #644;
+ min-height:97%;
 }
+
 #header {
- width: 900px;
+ width: 978px; /*900*/
  color: #333;
  padding: 10px;
  /*
@@ -40,7 +62,7 @@ body {
  
 }
 #navigation {
- width: 900px;
+ width: 978px; /* 900 */
  color: #333;
  padding: 10px;
  /*
@@ -51,7 +73,7 @@ body {
  /* background: #BD9C8C; */
 }
 #content { 
- width: 900px;
+ width: 978px;
  color: #333;
  
  /*
@@ -109,10 +131,9 @@ body {
 /*
  * Copied part ends hre
  * */
- 
- 
 
 #header #titleSpan {position:absolute; left:0px;padding:5px;}
+#header #titleSpan h1 a, #header #titleSpan h1 a:visited, #header #titleSpan h1 a:hover{font-family:Droid Serif; text-shadow: 4px 4px 4px #bbb;color:Black;}
 #header #titleSpan #subHeading {Font-size:120%;}
 #header #titleSpan a {text-decoration:none;}
 
@@ -169,5 +190,108 @@ li.atom{margin:2px;background-color:#ffffef;}
 #user_div .account_info_user {color:#9d9d9d;}
 
 #user_div .account_info_user a {color:#9d9dff; text-decoration:none;}
+
+
+/* Following is general styling for index page */
+
+a img{border:0px;}
+
+#topicImageContainer {padding:20px;}
+#image_attribution_text {font-size:80%;color:#ccaacc;}
+#image_attribution_text *{color:#ccaacc;text-decoration:none;}
+
+.opinion_text_form_container {}
+
+.opinion_text {padding:0px;margin:0px;font-size:100%;border:1px dotted;}
+
+.like_opinion_text {background-color:#eeffee;}
+.unlike_opinion_text {background-color:#ffeeee;}
+
+form.new_opinion {display:inline;}
+
+.centeredContainer {margin-left:auto;margin-right:auto;text-align:center;}
+.leftedContainer {margin-left:auto;margin-right:auto;text-align:left;}
+
+#topicTitle {font-size:220%;}
+
+#topicImageContainer {padding:10px;padding-bottom:25px;}
+#topicImageContainer img{border:0px;max-width:80%;max-height:60%;}
+
+#similar_session_users {width:100%;font-size:110%;}
+#similar_session_users table{width:100%;border:0;}
+.similar_session_user_cell {border:0;text-align:center;vertical-align:middle;padding:7px;font-size:100%;}
+.similar_session_user_cell a, .similar_session_user_cell a:visited{border:0;text-decoration:none;}
+
+.similar_session_user_cell a:hover {}
+
+#opinions {width:100%;}
+#opinions > table {width:100%;border-spacing:0px;border-bottom:1px dotted;}
+#opinions > table tr {width:100%;}
+#opinions > table td {padding:4px;margin:0px;height:24px;}
+#opinions > table th {padding:4px;margin:0px;height:24px;}
+
+.topic_attribute_like {font-size:115%;color:#446644;border-left:1px dotted;border-right:1px dotted;width:25%;border-top:1px dotted;}
+.topic_attribute {font-weight:bold;font-size:115%;color:#444444;border-top:1px dotted;}
+.topic_attribute_unlike {font-size:115%;color:#664444;border-right:1px dotted;border-left:1px dotted;width:25%;border-top:1px dotted;}
+
+th.topic_attribute_like {font-size:110%;border-right:1px dotted;font-weight:bold;}
+th.topic_attribute {font-size:110%;visibility:hidden;}
+th.topic_attribute_unlike {font-size:115%;border-left:1px dotted;}
+
+.new_opinion {display:inline;}
+
+.oneLikeItem {margin:15px;}
+
+.oneLikeItem .liker {font-style:Italic;}
+.oneLikeItem .likeText {}
+.oneLikeItem .dislikeText {}
+
+.oneLikeItem .attribLiked {font-weight:bold;color:Green;}
+.oneLikeItem .attribDisliked {font-weight:bold;color:Red;}
+
+.oneLikeItem .currentItemText {}
+
+.meTooLink {color:#111111;}
+.notAtAllLink {color:#ff2222;}
+
+/* Following styling is for like unlike button with thumb up and thumb down */
+
+a.lubutton {text-decoration:none;}
+
+backup {
+  
+  color:#3B5998;background-color:#ECEEF5;
+  
+  border:2px solid #CAD4E7;
+  
+  }
+
+a.like_button {
+  
+  color:#0B6138;background-color:#E0F8EC;
+  border:1px solid #A9F5D0;
+  padding:2px;
+  border-bottom-left-radius: 3px 3px;
+  border-bottom-right-radius: 3px 3px;
+  border-top-left-radius: 3px 3px;
+  border-top-right-radius: 3px 3px;
+  }
+  
+a.like_button span {font-size:12px;background:url('/images/thumb_up.png') no-repeat;padding-left:18px;}
+  
+a.unlike_button {color:Red;}
+
+a.unlike_button {
+  
+  color:#610B0B;background-color:#F8E0E0;
+  border:1px solid #F5A9A9;
+  padding:2px;
+  border-bottom-left-radius: 3px 3px;
+  border-bottom-right-radius: 3px 3px;
+  border-top-left-radius: 3px 3px;
+  border-top-right-radius: 3px 3px;
+  }
+  
+a.unlike_button span {font-size:12px;background:url('/images/thumb_down.png') no-repeat;padding-left:18px;}
 
 

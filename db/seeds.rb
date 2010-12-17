@@ -7,7 +7,9 @@
 #   Major.create(:name => 'Daley', :city => cities.first)
 
 
-puts "Hello there Amit"
+puts "Seeding database"
+
+puts "Seeding PossibleName"
 
 PossibleName.delete_all
 
@@ -17,15 +19,14 @@ File.open("./db/possible_names_list.txt").each { |line|
 
 }
 
-for possible_name in PossibleName.find(:all)
+puts "seeding Topic"
 
-	puts possible_name.name
+Topic.delete_all
 
-end
+new_topic = Topic.new(:name => "Friends", :description => "Sitcom featurng 6 friends and their life in NewYork",
+	  :image_url => "http://janeheller.mlblogs.com/friends.jpg", :image_attribution_text => "thanks for link http://janeheller.mlblogs.com/",
+	  :time_to_show => Time.now)
+	  
+new_topic.save
 
-#open("http://openconcept.ca/sites/openconcept.ca/files/country_code_drupal_0.txt") do |countries|  
-  #countries.read.each_line do |country|  
-    #code, name = country.chomp.split("|")  
-    #Country.create!(:name => name, :code => code)  
-  #end  
-#end 
+puts "Seeding Completed Successfully"

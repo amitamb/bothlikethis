@@ -1,76 +1,20 @@
-<style>
-* {font-family:Courier;}
-body {}
-a img{border:0px;}
-
-form.new_opinion {display:inline;}
-
-.centeredContainer {margin-left:auto;margin-right:auto;text-align:center;}
-.leftedContainer {margin-left:auto;margin-right:auto;text-align:left;}
-
-#topicTitle {font-size:220%;}
-
-#topicImageContainer {padding:10px;padding-bottom:25px;}
-#topicImageContainer img{border:0px;max-width:80%;max-height:60%;}
-
-#similar_session_users {width:100%;font:inherit;}
-#similar_session_users table{width:100%;border:0;}
-.similar_session_user_cell {border:0;text-align:center;vertical-align:middle;padding:7px;font-size:100%;}
-.similar_session_user_cell a, .similar_session_user_cell a:visited{border:0;text-decoration:none;}
-
-.similar_session_user_cell a:hover {}
-
-#opinions {width:100%;}
-#opinions > table {width:100%;border-spacing:0px;border-bottom:1px dotted;}
-#opinions > table tr {width:100%;}
-#opinions > table td {padding:4px;margin:0px;height:24px;}
-#opinions > table th {padding:4px;margin:0px;height:24px;}
-
-.topic_attribute_like {font-size:115%;color:#446644;border-left:1px dotted;border-right:1px dotted;width:25%;border-top:1px dotted;}
-.topic_attribute {font-weight:bold;font-size:115%;color:#444444;border-top:1px dotted;}
-.topic_attribute_unlike {font-size:115%;color:#664444;border-right:1px dotted;border-left:1px dotted;width:25%;border-top:1px dotted;}
-
-th.topic_attribute_like {font-size:110%;border-right:1px dotted;font-weight:bold;}
-th.topic_attribute {font-size:110%;visibility:hidden;}
-th.topic_attribute_unlike {font-size:115%;border-left:1px dotted;}
-
-.new_opinion {display:inline;}
-
-.oneLikeItem {margin:15px;}
-
-.oneLikeItem .liker {font-style:Italic;}
-.oneLikeItem .likeText {}
-.oneLikeItem .dislikeText {}
-
-.oneLikeItem .attribLiked {font-weight:bold;color:Green;}
-.oneLikeItem .attribDisliked {font-weight:bold;color:Red;}
-
-.oneLikeItem .currentItemText {}
-
-.meTooLink {color:#111111;}
-.notAtAllLink {color:#ff2222;}
-
-</style>
-
 <div class="centeredContainer">
 
 <div id="topicTitle">
 <%=h @current_topic.name %>
 </div>
 
-<!-- <img id="topicImage" src="http://213.251.145.96/img/wlogo.png" /> -->
-
-<div id="topicImageContainer" style="padding:20px;">
+<div id="topicImageContainer">
 <img id="topicImage" src="<%=h @current_topic.image_url %>" />
 <br />
-<span style="font-size:80%;color:#ccaacc;"><%= @current_topic[:image_attribution_text] %></span>
+<span id="image_attribution_text"><%= auto_link @current_topic[:image_attribution_text] %></span>
 </div>
 
-<div style="font-size:110%;">
+<div class="opinion_text_form_container">
 <% form_remote_for(@like_opinion) do |f| %>
   <%= f.error_messages %>
   
-  The thing that I <b>love</b> about <b><%=h @current_topic.name %></b> is <input id="likeTextBox_top" name="opinion_text" autocomplete="off" type="text" style="padding:0px;margin:0px;font-size:100%;border:1px dotted;background-color:#eeffee;" value="" size="10" onkeyup="changeSize(this)" onchange="changeSize(this)" />.
+  The thing that I <b>love</b> about <b><%=h @current_topic.name %></b> is <input id="likeTextBox_top" name="opinion_text" autocomplete="off" type="text" class="opinion_text like_opinion_text" style="" value="" size="10" onkeyup="changeSize(this)" onchange="changeSize(this)" />.
   
   <%= f.hidden_field :like %>
   <%= f.hidden_field :action_type, :Value => 1 %>
@@ -83,7 +27,7 @@ th.topic_attribute_unlike {font-size:115%;border-left:1px dotted;}
 <% form_remote_for(@dislike_opinion) do |f| %>
   <%= f.error_messages %>
   
-  The thing that I <b>hate</b> about <b><%=h @current_topic.name %></b> is <input id="unlikeTextBox_top" name="opinion_text" autocomplete="off" type="text" style="padding:0px;margin:0px;font-size:100%;border:1px dotted;background-color:#ffeeee;" value="" size="10" onkeyup="changeSize(this)" onchange="changeSize(this)" />.
+  The thing that I <b>hate</b> about <b><%=h @current_topic.name %></b> is <input id="unlikeTextBox_top" name="opinion_text" autocomplete="off" type="text" class="opinion_text unlike_opinion_text" value="" size="10" onkeyup="changeSize(this)" onchange="changeSize(this)" />.
   
   <%= f.hidden_field :like %>
   <%= f.hidden_field :action_type, :Value => 1 %>
@@ -93,13 +37,12 @@ th.topic_attribute_unlike {font-size:115%;border-left:1px dotted;}
 </div>
 </div>
 <br />
-<div id="similar_session_users" style="font-size:110%;font-family:courier;" class="centeredContainer">
+<div id="similar_session_users" class="centeredContainer">
 
   <h3 style="padding:10px;">Like minded users</h3>
   
   <hr />
-
-  
+ 
   <table>
   
     <% if @similar_session_users.size > 0 %>
@@ -118,7 +61,7 @@ th.topic_attribute_unlike {font-size:115%;border-left:1px dotted;}
   </table>
 </div>
 <hr />
-<div class="centeredContainer" style="font-size:110%;font-family:courier;" id="likeDashboard" >
+<div class="centeredContainer" style="" id="likeDashboard" >
 
 
 
@@ -162,50 +105,6 @@ function create_opinion(text, like, action_type)
 }
 
 </script>
-
-<style>
-
-* {padding:0px;margin:0px;}
-
-a.lubutton {text-decoration:none;}
-
-backup {
-  
-  color:#3B5998;background-color:#ECEEF5;
-  
-  border:2px solid #CAD4E7;
-  
-  }
-
-a.like_button {
-  
-  color:#0B6138;background-color:#E0F8EC;
-  border:1px solid #A9F5D0;
-  padding:2px;
-  border-bottom-left-radius: 3px 3px;
-  border-bottom-right-radius: 3px 3px;
-  border-top-left-radius: 3px 3px;
-  border-top-right-radius: 3px 3px;
-  }
-  
-a.like_button span {font-size:12px;background:url('/images/thumb_up.png') no-repeat;padding-left:18px;}
-  
-a.unlike_button {color:Red;}
-
-a.unlike_button {
-  
-  color:#610B0B;background-color:#F8E0E0;
-  border:1px solid #F5A9A9;
-  padding:2px;
-  border-bottom-left-radius: 3px 3px;
-  border-bottom-right-radius: 3px 3px;
-  border-top-left-radius: 3px 3px;
-  border-top-right-radius: 3px 3px;
-  }
-  
-a.unlike_button span {font-size:12px;background:url('/images/thumb_down.png') no-repeat;padding-left:18px;}
-
-</style>
 
 <br />
 

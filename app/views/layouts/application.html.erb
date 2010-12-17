@@ -17,7 +17,9 @@
 
   <%= stylesheet_link_tag 'global' %>
   
-  <!-- <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Reenie+Beanie"> -->
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Arvo">
+  <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans">
   
   <%= javascript_include_tag :defaults %>
 
@@ -50,9 +52,9 @@
 	  </span>
           <div id="user_div">
           
-          <span class="account_info_session_user" style="color:#7d7d7d;">You are known as <b><%= link_to @current_session_user.given_username, @current_session_user %></b> for current topic.</span>
-          <br />
-          <span class="account_info_user" style="color:#7d7d7d;"><a href="#">Login</a> or <a href="#">Register</a> to associate your permanant identity.</span>
+          <span class="account_info_session_user" style="color:#7d7d7d;">You are known as <b><%= link_to getCurrentSessionUser.given_username, getCurrentSessionUser %></b> for current topic</span>
+	  
+	  <%= render :partial => "users/user_bar" %>
           
           </div> 	 
 			   
@@ -69,7 +71,8 @@
 		 
 		 <!-- Begin Content -->
 		 <div id="content">
-		       
+	
+       <p style="color: red"><%= flash[:error] %></p>	       
        <p style="color: green"><%= flash[:notice] %></p>
 
        <%= yield  %>
