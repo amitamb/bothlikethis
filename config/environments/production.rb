@@ -27,4 +27,5 @@ config.action_view.cache_template_loading            = true
 # Enable threaded mode
 # config.threadsafe!
 
+#requires for enabled activation
 SITE_URL = "www.bothlikethis.com"

@@ -1,0 +1,19 @@
+
+<h3 style="padding:10px;">Like minded users</h3>
+
+<table>
+
+  <% if @similar_session_users.size > 0 %>
+    <% @similar_session_users.in_groups_of(3, false) do |session_users_group| %>
+      <tr>
+      <% for session_user in session_users_group %>
+        <td class="similar_session_user_cell"><%= link_to session_user.given_username, session_user %><!-- - <%= session_user.match_score %> --></td>
+      <% end %>
+      </tr>
+    <% end %>
+  <% else %>
+    <tr>
+        <td class="similar_session_user_cell">None found</td>
+    </tr>
+  <% end %>
+</table>

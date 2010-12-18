@@ -1,0 +1,22 @@
+<% form_remote_for(@like_opinion) do |f| %>
+  <%= f.error_messages %>
+  
+  The thing that I <b>love</b> about <b><%=h @current_topic.name %></b> is <input id="likeTextBox_top" name="opinion_text" autocomplete="off" type="text" class="opinion_text like_opinion_text" style="" value="" size="10" onkeyup="changeSize(this)" onchange="changeSize(this)" />.
+  
+  <%= f.hidden_field :like %>
+  <%= f.hidden_field :action_type, :Value => 1 %>
+  
+<% end %>
+
+<br />
+<br />
+
+<% form_remote_for(@dislike_opinion) do |f| %>
+  <%= f.error_messages %>
+  
+  The thing that I <b>hate</b> about <b><%=h @current_topic.name %></b> is <input id="unlikeTextBox_top" name="opinion_text" autocomplete="off" type="text" class="opinion_text unlike_opinion_text" value="" size="10" onkeyup="changeSize(this)" onchange="changeSize(this)" />.
+  
+  <%= f.hidden_field :like %>
+  <%= f.hidden_field :action_type, :Value => 1 %>
+  
+<% end %>

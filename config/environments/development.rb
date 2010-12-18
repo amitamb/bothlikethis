@@ -29,4 +29,5 @@ config.action_mailer.raise_delivery_errors = true
   #:password       => '100$112#108@'
 #}
 
+#requires for enabled activation
 SITE_URL = "local.bothlikethis.com"

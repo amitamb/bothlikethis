@@ -4,6 +4,8 @@
 
 #page.call("delete_it", get_topic_attribute_cell_info(@opinion))
 
+page.replace_html "similar_session_users", :partial => 'session_users/similar_users'
+
 if @new_topic_attribute
   
   # there is new attribute addition 

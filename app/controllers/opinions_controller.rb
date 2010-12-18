@@ -112,12 +112,13 @@ class OpinionsController < ApplicationController
     @opinion[:unlike_count] = unlike_count
 
     respond_to do |format|
-      if @topic_attribute.save && @opinion.save
+      # HACK : Pustting a statement that needs to be executed in And clause
+      if @topic_attribute.save && @opinion.save && (@similar_session_users = getCurrentSessionUser.similar_session_users || true)
         format.html { flash[:notice] = 'Opinion was successfully created.'
                       redirect_to root_path }
         format.xml  { render :xml => @opinion, :status => :created, :location => @opinion }
         
-        format.js
+        format.js   {  }
       else
         format.html { redirect_to root_path }
         format.xml  { render :xml => @opinion.errors, :status => :unprocessable_entity }

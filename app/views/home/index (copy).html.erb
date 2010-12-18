@@ -1,0 +1,163 @@
+<div class="centeredContainer">
+
+<div id="topicTitle">
+  <%=h @current_topic.name %>
+</div>
+
+<div id="topicImageContainer">
+<img id="topicImage" src="<%=h @current_topic.image_url %>" />
+<br />
+<span id="image_attribution_text"><%= auto_link @current_topic[:image_attribution_text] %></span>
+</div>
+
+<div class="opinion_text_form_container">
+
+  <%= render :partial => "opinions/like_unlike_text_form" %>
+
+</div>
+
+</div>
+
+<br />
+
+<div id="similar_session_users" class="centeredContainer">
+
+  <%= render :partial => "session_users/similar_users" %>
+
+</div>
+
+<hr />
+<div class="centeredContainer" style="" id="likeDashboard" >
+
+
+
+<% form_remote_for(@opinion_form, :html => {:id => 'opinion_form' }) do |f| %>
+
+  <input id="likeTextBox" name="opinion_text" autocomplete="off" type="hidden" value="" size="10" onkeydown="changeSize(this)" onchange="changeSize(this)" />
+
+  <%= f.hidden_field :like %>
+  <%= f.hidden_field :action_type, :Value => 2 %>
+  
+  <!-- <%= f.submit "Me Too" %> -->
+  
+<% end %>
+
+<script>
+function create_opinion(text, like, action_type)
+{
+  if (text == null)
+  {
+    alert("CreateOpinion: Error in text");
+    return;
+  }
+  
+  if (like == null)
+  {
+    alert("CreateOpinion: Error in like");
+    return;
+  }
+    
+  if (action_type == null)
+  {
+    action_type = 2;
+  }
+  
+  var opinion_form = $("opinion_form");
+  opinion_form.opinion_text.value = text;
+  opinion_form["opinion[like]"].value = like;
+  opinion_form["opinion[action_type]"].value = action_type;
+  
+  opinion_form.onsubmit();
+}
+
+</script>
+
+<br />
+
+<div id="opinions">
+<table id="opinions_table">
+  <tr id="opinions_table_header">
+      <th class="topic_attribute_like">Likes</th>
+      <th class="topic_attribute">About</th>
+      <th class="topic_attribute_unlike">Hates</th>
+  </tr>
+<% for opinion in @opinions %>
+
+    <% opinion[:like_count] = opinion[:like_count].to_i() - (if opinion[:current_session_user_like_int] == "1" then 1 else 0 end) %>
+    <% opinion[:unlike_count] = opinion[:unlike_count].to_i() - (if opinion[:current_session_user_like_int] == "-1" then 1 else 0 end) %>
+    
+    <% cell_info = get_topic_attribute_cell_info(opinion) %>
+
+    <tr id="topic_attribute_row_<%= opinion[:topic_attribute_id] %>">
+    <td class="topic_attribute_like" id="topic_attribute_like_cell_<%= opinion[:topic_attribute_id] %>">
+       
+      <%= cell_info[:like_text] %>
+      
+      <% if cell_info[:show_like_button] %>   
+      
+        <%= link_to_function(content_tag(:span, "Like"), "create_opinion('"+ escape_javascript(opinion[:text]) + "', true)", :style => "float:right;", :class => "lubutton like_button") %>
+
+      <% end %>    
+      
+    </td>
+        
+    <td class="topic_attribute" id="topic_attribute_text_cell_<%= opinion[:topic_attribute_id] %>">
+    
+      <div style="position:relative;width:100%;height:100%;">
+        <%=h cell_info[:text] %>
+        
+        <% if is_user_admin%>
+          <%= link_to 'Destroy', TopicAttribute.find(opinion[:topic_attribute_id]), :confirm => 'Are you sure?', :method => :delete, :style => "position:absolute;bottom:0px;right:10px;font-size:10px;color:#d1d1d1;text-decoration:none;" %>
+        <% end %>
+      </div>
+    
+    </td>
+        
+    <td class="topic_attribute_unlike" id="topic_attribute_unlike_cell_<%= opinion[:topic_attribute_id] %>">
+    
+      <%= cell_info[:unlike_text] %>
+      
+      <% if cell_info[:show_unlike_button] %>
+      
+        <%= link_to_function(content_tag(:span, "Hate"), "create_opinion('"+ escape_javascript(opinion[:text]) + "', false)", :style => "float:left;", :class => "lubutton unlike_button") %>
+      
+      <% end %>
+    
+    </td>
+    </tr>
+
+<% end %>
+</table>
+</div>
+
+<!--
+<% if @next_topic %>
+Time to show next topic <%= distance_of_time_in_words(Time.now.utc, @next_topic.time_to_show.utc) %>
+<hr />
+<% end %>
+-->
+
+</div>
+
+<script>
+
+function changeSize(srcElem)
+{
+  if (srcElem.value.length > 0)
+  {
+    if (srcElem.value.length > 10)
+      srcElem.size = srcElem.value.length;
+    else
+      srcElem.size = 10;
+  }
+  else
+  {
+    srcElem.size = 10;
+  }
+}
+
+var likeTextBox = document.getElementById("likeTextBox_top");
+
+likeTextBox.focus();
+
+</script>

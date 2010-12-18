@@ -1,3 +1,6 @@
+################
+#Check and working but not used
+################
 ActionMailer::Base.delivery_method = :smtp
 ActionMailer::Base.smtp_settings = {
   :address        => 'mumsmtp.hathway.com',

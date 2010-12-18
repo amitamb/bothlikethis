@@ -35,8 +35,11 @@
 
 </div>
 
+		<table style="width:100%;">
+		 <tr>
+		
 		 <!-- Begin Left Column -->
-		 <div id="leftcolumn">
+		 <td id="leftcolumn" style="width:80%;">
 		       
 		       <div id="send_message_container">
 						<% form_for(@session_user_message) do |f| %>
@@ -74,11 +77,11 @@
 
 						</div>
 
-		 </div>
+		 </td>
 		 <!-- End Left Column -->
 		 
 		 <!-- Begin Right Column -->
-		 <div id="rightcolumn">
+		 <td id="rightcolumn">
 		       
 				<div id="likes_container">
 				<h3>Likes</h3>
@@ -116,9 +119,10 @@
 				
 				</div>
 		 
-		 </div>
+		 </td>
 		 <!-- End Right Column -->
-
+		</tr>
+		</table>
 
 
 

@@ -1,13 +1,3 @@
-<p>
-  <b>Username:</b>
-  <%=h @user.username %>
-</p>
+<h2 style="display:inline"> <%=h current_user.login %> </h2>
 
-<p>
-  <b>Email:</b>
-  <%=h @user.email %>
-</p>
-
-
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<%  %>

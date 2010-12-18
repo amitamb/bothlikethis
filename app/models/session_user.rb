@@ -26,7 +26,7 @@ class SessionUser < ActiveRecord::Base
   
   end
   
-  def self.get_new_for_topic(topic)
+  def self.get_new_with_random_username(topic, user = nil)
 
     session_user = SessionUser.new
     
@@ -35,6 +35,7 @@ class SessionUser < ActiveRecord::Base
     session_user.given_username = new_given_name.name
 
     session_user.topic = topic
+    session_user.user = user
 
     session_user.save
     

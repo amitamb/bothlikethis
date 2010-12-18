@@ -14,7 +14,6 @@ class ApplicationController < ActionController::Base
   # filter_parameter_logging :password
   
   include AuthenticatedSystem
-
   
   helper_method :is_user_admin, :getCurrentTopic, :getNextTopic, :getCurrentUser, :getCurrentSessionUser
   
@@ -54,18 +53,11 @@ class ApplicationController < ActionController::Base
     
     end
     
-    def getCurrentUser
+    #def getCurrentUser
     
-      if @current_user then return @current_user end
-
-      #@current_user = User.find(1)
-
-      #@current_user
-      
-      # return nil
-      nil
+      #return current_user
     
-    end
+    #end
     
     def getCurrentSessionUser
     
@@ -78,17 +70,55 @@ class ApplicationController < ActionController::Base
         end
       end
       
+      return @current_session_user = setCurrentSessionUser
+      
+    end
+    
+    def setCurrentSessionUser
       # create new user and return it
-      if (current_user = getCurrentUser)
+      if current_user
         #user is logged in create session user for him/her
+        current_user_session_user = SessionUser.find(:first, :conditions => ["topic_id = ? and user_id = ?", getCurrentTopic.id, current_user.id ])
+        
+        if current_user_session_user
+          # there is already a session user for current user
+          # use that
+          # ignore existing session_user
+          session[:current_session_user_id] = current_user_session_user.id
+          
+          return current_user_session_user
+        else
+          need_to_create_new_session_user = false
+          # user existing session_user if any
+          if !session[:current_session_user_id]
+            need_to_create_new_session_user = true
+          elsif SessionUser.find(session[:current_session_user_id], :include => :user).user != nil
+            need_to_create_new_session_user = true
+          end
+          
+          if need_to_create_new_session_user
+            @current_session_user = SessionUser.get_new_with_random_username(getCurrentTopic, current_user)
+            
+            return @current_session_user
+          else
+            existing_session_user = SessionUser.find(session[:current_session_user_id])
+            
+            existing_session_user.user = current_user
+            
+            existing_session_user.save
+            
+            return existing_session_user
+          end
+        end
+        
+        return nil
       else
-        @current_session_user = SessionUser.get_new_for_topic(getCurrentTopic)
+        @current_session_user = SessionUser.get_new_with_random_username(getCurrentTopic)
 
         session[:current_session_user_id] = @current_session_user.id
         
         return @current_session_user
       end
-
     end
     
     # following methods are used for authentication

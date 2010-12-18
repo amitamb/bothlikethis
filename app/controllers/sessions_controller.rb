@@ -3,7 +3,6 @@ class SessionsController < ApplicationController
 
   # render new.erb.html
   def new
-    @remember_me = true
   end
 
   def create
@@ -17,6 +16,24 @@ class SessionsController < ApplicationController
       self.current_user = user
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
+      
+      # should update current session user
+      setCurrentSessionUser
+      
+      ## do session_user handling
+      #su = SessionUser.find(:first, :conditions => ["topic_id = ? and user_id = ?", getCurrentTopic.id, current_user.id ])
+      
+      
+      
+      #if (su)
+      #{
+        ## set session use
+      #}
+      #else
+      #{
+        ## create new session user for current user
+      #}      
+      
       redirect_back_or_default('/')
       flash[:notice] = "Logged in successfully"
     else
@@ -36,7 +53,7 @@ class SessionsController < ApplicationController
 protected
   # Track failed login attempts
   def note_failed_signin
-    flash.now[:error] = "Authentication Failure"
+    flash[:error] = "Couldn't log you in as '#{params[:login]}'"
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
 end

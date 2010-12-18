@@ -24,7 +24,7 @@ puts "seeding Topic"
 Topic.delete_all
 
 new_topic = Topic.new(:name => "Friends", :description => "Sitcom featurng 6 friends and their life in NewYork",
-	  :image_url => "http://janeheller.mlblogs.com/friends.jpg", :image_attribution_text => "thanks for link http://janeheller.mlblogs.com/",
+	  :image_url => "/images/friends.jpg", :image_attribution_text => "thanks for link http://janeheller.mlblogs.com/",
 	  :time_to_show => Time.now)
 	  
 new_topic.save
