@@ -1,3 +1,13 @@
 <h2 style="display:inline"> <%=h current_user.login %> </h2>
 
-<%  %>
+<div style="font-size:110%;padding:15px;">
+Your aliases
+
+<ul style="list-style:none;">
+<% for session_user in current_user.session_users %>
+
+<li><%= link_to session_user.given_username, session_user %> <span>from <i><%= session_user.topic.name %></i></span></li>
+
+<% end %>
+</ul>
+</div>
