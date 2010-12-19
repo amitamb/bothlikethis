@@ -13,7 +13,7 @@ module ApplicationHelper
     end
     
     if opinion[:like_count] == 0
-      if opinion[:current_session_user_like_int] != "1" || opinion[:current_session_user_like_int] != 1
+      if !(opinion[:current_session_user_like_int] == "1" || opinion[:current_session_user_like_int] == 1)
         like_text += "No one"
       end
     else
@@ -32,7 +32,7 @@ module ApplicationHelper
     end
     
     if opinion[:unlike_count] == 0
-      if opinion[:current_session_user_like_int] != "-1" || opinion[:current_session_user_like_int] != -1
+      if !(opinion[:current_session_user_like_int] == "-1" || opinion[:current_session_user_like_int] == -1)
         unlike_text += "No one"
       end
     else
