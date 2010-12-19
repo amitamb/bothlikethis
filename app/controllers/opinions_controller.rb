@@ -92,7 +92,7 @@ class OpinionsController < ApplicationController
     @opinion[:text] = @topic_attribute.text
     
     # a string
-    # in ubuntu
+    # in ubuntu on devbox
     @opinion[:current_session_user_like_int] = @opinion.like_int.to_s()
     
     like_count = 0

@@ -51,8 +51,8 @@ function create_opinion(text, like, action_type)
   </tr>
 <% for opinion in @opinions %>
 
-    <% opinion[:like_count] = opinion[:like_count].to_i() - (if opinion[:current_session_user_like_int] == "1" then 1 else 0 end) %>
-    <% opinion[:unlike_count] = opinion[:unlike_count].to_i() - (if opinion[:current_session_user_like_int] == "-1" then 1 else 0 end) %>
+    <% opinion[:like_count] = opinion[:like_count].to_i() - (if opinion[:current_session_user_like_int] == "1" || opinion[:current_session_user_like_int] == 1 then 1 else 0 end) %>
+    <% opinion[:unlike_count] = opinion[:unlike_count].to_i() - (if opinion[:current_session_user_like_int] == "-1" || opinion[:current_session_user_like_int] == -1 then 1 else 0 end) %>
     
     <% cell_info = get_topic_attribute_cell_info(opinion) %>
 
